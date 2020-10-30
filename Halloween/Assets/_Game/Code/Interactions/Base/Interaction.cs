@@ -28,6 +28,8 @@ public class Interaction : MonoBehaviour
     // if this interaction should be used
     public bool isActive = true;
 
+    public float uiDisplayYOffset = 1.0f;
+
 
     protected virtual void Awake ( )
     {
@@ -44,7 +46,22 @@ public class Interaction : MonoBehaviour
     public virtual void Interact ( PlayerController controller )
     {
 
-        Debug.Log ( "The " + controller.name + " has used the " + gameObject.name + " interaction!" );
+        //Debug.Log ( "The " + controller.name + " has used the " + gameObject.name + " interaction!" );
+        Deselect ( );
+
+    }
+
+    public virtual void Select ( )
+    {
+
+        InstructionInteract.OnUpdateUIInteract ( true, ( Vector2 ) transform.position + ( Vector2.up * uiDisplayYOffset ) );
+
+    }
+
+    public virtual void Deselect ( )
+    {
+        
+        InstructionInteract.OnUpdateUIInteract ( false, ( Vector2 ) transform.position + ( Vector2.up * uiDisplayYOffset ) );
 
     }
 
@@ -58,6 +75,19 @@ public class Interaction : MonoBehaviour
 
         return transform.position;
 
+    }
+
+
+    protected void OnDrawGizmos ( )
+    {
+
+        if ( transform == null )
+            transform = GetComponent<Transform> ( );
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine ( transform.position, transform.position + ( Vector3 ) ( Vector2.up * uiDisplayYOffset ) );
+        Gizmos.DrawWireSphere ( transform.position + ( Vector3 ) ( Vector2.up * uiDisplayYOffset ), 0.25f );
+        
     }
 
 }

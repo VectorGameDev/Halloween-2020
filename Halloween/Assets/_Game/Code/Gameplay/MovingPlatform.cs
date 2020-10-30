@@ -98,4 +98,26 @@ public class MovingPlatform : MonoBehaviour
     }
 
 
+    private void OnDrawGizmos ( )
+    {
+
+        Gizmos.color = Color.green;
+
+        for ( int i = 0; i < path.Count; i++ )
+        {
+
+            if ( path [ i ] != null )
+                Gizmos.DrawWireSphere ( path [ i ].position, 0.25f );
+
+            if ( i == path.Count - 1 )
+            continue;
+
+            if ( path [ i + 1 ] != null )
+                Gizmos.DrawLine ( path [ i ].position, path [ i + 1 ].position );
+
+        }
+
+    }
+
+
 }
