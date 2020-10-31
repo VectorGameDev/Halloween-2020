@@ -126,13 +126,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 lastCheckpointPosition = Vector3.zero;
 
 
-
-    [ Header ( "Light Settings" ) ]
-
-    // the light - emission from the character's eyes
-    public Transform eyeLight = null;
-
-
     [Header ( "Raycasting Settings" )]
 
     // raycast offset
@@ -252,17 +245,14 @@ public class PlayerController : MonoBehaviour
         rigidbody.velocity = velocity;
 
 
-        if ( Mathf.Abs ( rigidbody.velocity.x ) > 0.05f )
+        if ( Mathf.Abs ( movementDirection.x ) > 0.05f )
         {
 
             // flipping the sprite when needed
-            renderer.flipX = rigidbody.velocity.x < 0.0f;
+            renderer.flipX = movementDirection.x < 0.0f;
 
             if ( hatRenderer != null )
                 hatRenderer.flipX = renderer.flipX;
-
-            // also make sure light is pointing to the correct position
-            eyeLight.rotation = Quaternion.Euler ( 0f, 0f, ( renderer.flipX ) ? 90f : -90f );
 
         }
 

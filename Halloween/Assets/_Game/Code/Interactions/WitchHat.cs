@@ -18,6 +18,24 @@ public class WitchHat : Interaction
     // the particle FX to be disabled
     public GameObject particleFX = null;
 
+
+    // -- this was done in a rush -- this code should be optimized
+    // this is a temp way to make sure the player has gotten the hat!
+    // this needs to be changed on the next update
+    private static bool _hasGrabbed = false;
+    private void Start ( )
+    {
+        
+        if ( _hasGrabbed )
+        {
+            GetComponent<SpriteRenderer> ( ).enabled = true;
+            FindObjectOfType<PlayerController> ( ).SetNewHat ( transform );
+        }
+
+    }
+    // --
+
+
     public override void Interact ( PlayerController controller )
     {
 
@@ -32,6 +50,9 @@ public class WitchHat : Interaction
 
         // hide the particle FX
         particleFX.SetActive ( false );
+
+
+        _hasGrabbed = true;
 
     }
 
