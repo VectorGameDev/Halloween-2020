@@ -1,5 +1,6 @@
-﻿
-
+﻿// Vector Game Dev
+// Halloween 2020
+// Game Dev Session
 
 // Using Statements
 using System.Collections;
@@ -16,6 +17,7 @@ public class GameplaySetup : MonoBehaviour
     public SpriteRenderer glowRenderer = null;
     public InstructionMovement instructionMovement = null;
     public CinemachineVirtualCamera cinemachineCam = null;
+    public ParallaxBackground parallaxBackground = null;
 
     public Color playerStartColor = Color.black;
     public Color playerTargetColor = Color.white;
@@ -33,7 +35,6 @@ public class GameplaySetup : MonoBehaviour
 
 
 
-
     private void Start ( )
     {
 
@@ -46,6 +47,7 @@ public class GameplaySetup : MonoBehaviour
     {
 
         // setup
+        parallaxBackground.enabled = false;
         playerController.enabled = false;
         playerRenderer.color = playerStartColor;
         glowRenderer.color = playerGlowStartColor;
@@ -57,6 +59,9 @@ public class GameplaySetup : MonoBehaviour
 
     public IEnumerator Intro ( )
     {
+
+        // scripted cutscene
+
 
         yield return new WaitForSeconds ( startDelay );
 
@@ -108,6 +113,8 @@ public class GameplaySetup : MonoBehaviour
 
         instructionMovement.StartInstruction ( );
         playerController.enabled = true;
+
+        parallaxBackground.enabled = true;
 
 
     }

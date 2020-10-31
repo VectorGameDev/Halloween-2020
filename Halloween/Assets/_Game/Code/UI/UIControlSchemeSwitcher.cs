@@ -3,9 +3,8 @@
 // Game Dev Session
 
 
-using System.Collections;
+// Using Statements
 using System.Collections.Generic;
-
 using UnityEngine;
 
 
@@ -44,8 +43,14 @@ public class UIControlSchemeSwitcher : MonoBehaviour
     private void Start ( )
     {
 
-        GameControl gc = FindObjectOfType<PlayerController> ( ).GetGameControl ( );
-        OnControlSchemeUpdated ( gc, gc );
+        PlayerController pc = FindObjectOfType<PlayerController> ( );
+        if ( pc != null )
+        {
+
+            GameControl gc = pc.GetGameControl ( );
+            OnControlSchemeUpdated ( gc, gc );
+
+        }
 
     }
 

@@ -6,28 +6,29 @@
 
 
 // Using Statements
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 
 
 public class ParallaxBackground : MonoBehaviour
 {
 
+    // all the backgrounds that will be moved
     public Transform[] backgrounds = null;
 
+    // the speed of the movement
     public float speed = 5.0f;
 
-    private Vector3[] targetPositions = null;
-
+    // camera transform
     private Transform cameraTransform = null;
+
+    // previous camera position
     private Vector3 previousCameraPos = Vector3.zero;
 
 
     private void Awake ( )
     {
         
+        // get camera transform reference
         cameraTransform = Camera.main.GetComponent<Transform> ( );
 
     }
@@ -35,54 +36,28 @@ public class ParallaxBackground : MonoBehaviour
     private void Start ( )
     {
 
+        // get the previous camera position - initial position
         previousCameraPos = cameraTransform.position;
-        targetPositions = new Vector3 [ backgrounds.Length ];
-
-        for ( int i = 0; i < backgrounds.Length; i++ )
-            targetPositions [ i ] = backgrounds [ i ].position;
         
     }
 
     private void Update ( )
     {
-
-
-        for ( int i = 0; i < backgrounds.Length; i++ )
+        
+        foreach ( Transform background in backgrounds )
         {
 
-            if ( Mathf.Abs ( cameraTransform.position.x - previousCameraPos.x ) > 0.05f )
-            {
-
-                Vector3 target_position = new Vector3 ( 
-                    ( previousCameraPos.x - cameraTransform.position.x ) * ( -backgrounds [ i ].position.z ) + backgrounds [ i ].position.x,
-                    backgrounds [ i ].position.y,
-                    backgrounds [ i ].position.z );
-
-                targetPositions [ i ] = target_position;
-
-            }
-
-            backgrounds [ i ].position = Vector3.LerpUnclamped ( backgrounds [ i ].position, targetPositions[ i ], speed * Time.deltaTime );
+            // move the background elements
+            background.position = new Vector3 (
+                background.position.x + ( ( previousCameraPos.x - cameraTransform.position.x ) * ( -background.position.z ) / speed ) * Time.deltaTime,
+                background.position.y,
+                background.position.z
+                );
 
         }
-        
-        //foreach ( Transform background in backgrounds )
-        //{
-
-        //    Vector3 target_position = new Vector3 ( 
-        //        ( previousCameraPos.x - cameraTransform.position.x ) * ( -background.position.z ) + background.position.x,
-        //        background.position.y,
-        //        background.position.z );
-
-        //    background.position = new Vector3 (
-        //        background.position.x + ( ( previousCameraPos.x - cameraTransform.position.x ) * ( -background.position.z ) / speed ) * Time.deltaTime,
-        //        background.position.y,
-        //        background.position.z
-        //        );
-
-        //}
 
 
+        // update the camera previous position
         previousCameraPos = cameraTransform.position;
 
     }

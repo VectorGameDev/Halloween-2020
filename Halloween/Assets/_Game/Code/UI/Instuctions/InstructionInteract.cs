@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
+// Update the UI Interaction display
 public delegate void UpdateUIInteract ( bool active, Vector2 position );
 
 

@@ -1,4 +1,8 @@
-﻿
+﻿// Vector Game Dev
+// Halloween 2020
+// Game Dev Session
+
+
 // Using Statements
 using System.Collections;
 using System.Collections.Generic;

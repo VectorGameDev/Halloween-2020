@@ -166,6 +166,156 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""MainMenu"",
+            ""id"": ""56741646-a0f1-4b53-b927-3bea09c7753b"",
+            ""actions"": [
+                {
+                    ""name"": ""ResolutionNext"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d5c132b-10ed-4c4b-93d4-4f5ceb174cfd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ResolutionPrevious"",
+                    ""type"": ""Button"",
+                    ""id"": ""be53984b-a2b4-47bd-97d7-7f43139a6b8d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ResolutionConfirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""85586d0e-b899-4d31-8844-d8dce204b611"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Play"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c1717a2-2300-4d7f-a23c-945f0b3bcc1f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""73688bf5-3361-428e-b727-7771bc1f59fc"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ResolutionNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d1a94b2-9b7f-414f-83c2-406efc7f7eb5"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ResolutionNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d266e2cf-30e2-407a-a3b8-1ce00df2c1d1"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ResolutionNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52e6dc2c-b4a6-4889-9e22-49c7c7e28701"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ResolutionPrevious"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0ce42c8-d182-4de6-9160-09a7c20aa9ca"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ResolutionPrevious"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0050181f-1117-4fb3-acb3-a69164a97ab7"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ResolutionPrevious"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4cbe9e7b-894c-41e4-baaa-ed6324e190ae"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ResolutionConfirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""894df191-1704-4964-b673-7784efb1ca76"",
+                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ResolutionConfirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e4ea0d4-132c-4173-9f2c-d0352889128a"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Play"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3932444-0827-4571-89e0-2988f200501a"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Play"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -198,6 +348,12 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Game_Movement = m_Game.FindAction("Movement", throwIfNotFound: true);
         m_Game_Jump = m_Game.FindAction("Jump", throwIfNotFound: true);
         m_Game_Interact = m_Game.FindAction("Interact", throwIfNotFound: true);
+        // MainMenu
+        m_MainMenu = asset.FindActionMap("MainMenu", throwIfNotFound: true);
+        m_MainMenu_ResolutionNext = m_MainMenu.FindAction("ResolutionNext", throwIfNotFound: true);
+        m_MainMenu_ResolutionPrevious = m_MainMenu.FindAction("ResolutionPrevious", throwIfNotFound: true);
+        m_MainMenu_ResolutionConfirm = m_MainMenu.FindAction("ResolutionConfirm", throwIfNotFound: true);
+        m_MainMenu_Play = m_MainMenu.FindAction("Play", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -292,6 +448,63 @@ public class @GameControls : IInputActionCollection, IDisposable
         }
     }
     public GameActions @Game => new GameActions(this);
+
+    // MainMenu
+    private readonly InputActionMap m_MainMenu;
+    private IMainMenuActions m_MainMenuActionsCallbackInterface;
+    private readonly InputAction m_MainMenu_ResolutionNext;
+    private readonly InputAction m_MainMenu_ResolutionPrevious;
+    private readonly InputAction m_MainMenu_ResolutionConfirm;
+    private readonly InputAction m_MainMenu_Play;
+    public struct MainMenuActions
+    {
+        private @GameControls m_Wrapper;
+        public MainMenuActions(@GameControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ResolutionNext => m_Wrapper.m_MainMenu_ResolutionNext;
+        public InputAction @ResolutionPrevious => m_Wrapper.m_MainMenu_ResolutionPrevious;
+        public InputAction @ResolutionConfirm => m_Wrapper.m_MainMenu_ResolutionConfirm;
+        public InputAction @Play => m_Wrapper.m_MainMenu_Play;
+        public InputActionMap Get() { return m_Wrapper.m_MainMenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MainMenuActions set) { return set.Get(); }
+        public void SetCallbacks(IMainMenuActions instance)
+        {
+            if (m_Wrapper.m_MainMenuActionsCallbackInterface != null)
+            {
+                @ResolutionNext.started -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnResolutionNext;
+                @ResolutionNext.performed -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnResolutionNext;
+                @ResolutionNext.canceled -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnResolutionNext;
+                @ResolutionPrevious.started -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnResolutionPrevious;
+                @ResolutionPrevious.performed -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnResolutionPrevious;
+                @ResolutionPrevious.canceled -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnResolutionPrevious;
+                @ResolutionConfirm.started -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnResolutionConfirm;
+                @ResolutionConfirm.performed -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnResolutionConfirm;
+                @ResolutionConfirm.canceled -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnResolutionConfirm;
+                @Play.started -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnPlay;
+                @Play.performed -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnPlay;
+                @Play.canceled -= m_Wrapper.m_MainMenuActionsCallbackInterface.OnPlay;
+            }
+            m_Wrapper.m_MainMenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ResolutionNext.started += instance.OnResolutionNext;
+                @ResolutionNext.performed += instance.OnResolutionNext;
+                @ResolutionNext.canceled += instance.OnResolutionNext;
+                @ResolutionPrevious.started += instance.OnResolutionPrevious;
+                @ResolutionPrevious.performed += instance.OnResolutionPrevious;
+                @ResolutionPrevious.canceled += instance.OnResolutionPrevious;
+                @ResolutionConfirm.started += instance.OnResolutionConfirm;
+                @ResolutionConfirm.performed += instance.OnResolutionConfirm;
+                @ResolutionConfirm.canceled += instance.OnResolutionConfirm;
+                @Play.started += instance.OnPlay;
+                @Play.performed += instance.OnPlay;
+                @Play.canceled += instance.OnPlay;
+            }
+        }
+    }
+    public MainMenuActions @MainMenu => new MainMenuActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -315,5 +528,12 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IMainMenuActions
+    {
+        void OnResolutionNext(InputAction.CallbackContext context);
+        void OnResolutionPrevious(InputAction.CallbackContext context);
+        void OnResolutionConfirm(InputAction.CallbackContext context);
+        void OnPlay(InputAction.CallbackContext context);
     }
 }

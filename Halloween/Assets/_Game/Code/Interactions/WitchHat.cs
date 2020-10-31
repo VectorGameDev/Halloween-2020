@@ -15,6 +15,7 @@ using UnityEngine;
 public class WitchHat : Interaction
 {
 
+    // the particle FX to be disabled
     public GameObject particleFX = null;
 
     public override void Interact ( PlayerController controller )

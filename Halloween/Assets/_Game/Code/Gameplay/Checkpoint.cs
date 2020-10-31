@@ -1,4 +1,6 @@
-﻿
+﻿// Vector Game Dev
+// Halloween 2020
+// Game Dev Session
 
 // Using Statements
 using UnityEngine;

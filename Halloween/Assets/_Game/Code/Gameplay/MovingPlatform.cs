@@ -27,6 +27,7 @@ public class MovingPlatform : MonoBehaviour
     
     // the transform reference
     protected new Transform transform = null;
+    protected new Rigidbody2D rigidbody = null;
 
     // the path that the platform will follow
     public List<Transform> path = new List<Transform> ( );
@@ -52,13 +53,15 @@ public class MovingPlatform : MonoBehaviour
         // retrieving the transform reference
         transform = GetComponent<Transform> ( );
 
+        rigidbody = GetComponent<Rigidbody2D> ( );
+
     }
 
     private void FixedUpdate ( )
     {
 
         // check if the platform is close enough to the target position
-        if ( Vector2.Distance ( transform.position, path [ currentPathIndex ].position ) < threshold )
+        if ( Vector2.Distance ( rigidbody.position, path [ currentPathIndex ].position ) < threshold )
         {
 
             // if so change the next point on the path
@@ -92,8 +95,8 @@ public class MovingPlatform : MonoBehaviour
 
 
         // move the platform
-        Vector3 direction = ( path [ currentPathIndex ].position - transform.position ).normalized;
-        transform.position += direction * speed * Time.deltaTime;
+        Vector2 direction = ( ( Vector2 ) path [ currentPathIndex ].position - rigidbody.position ).normalized;
+        rigidbody.velocity = direction * speed * Time.deltaTime;
         
     }
 

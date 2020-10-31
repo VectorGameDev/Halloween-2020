@@ -3,7 +3,7 @@
 // Game Dev Session
 
 // Blink Object
-
+// Bliking eyes in the forest.
 
 // Using Statements
 using System.Collections;
@@ -72,16 +72,6 @@ public class BlinkObject : MonoBehaviour
 
         foreach ( SpriteRenderer renderer in renderers )
             renderer.enabled = false;
-
-        //yield return new WaitForSeconds ( blinkingTime );
-
-        //foreach ( SpriteRenderer renderer in renderers )
-        //    renderer.enabled = true;
-
-        //yield return new WaitForSeconds ( blinkingTime );
-
-        //foreach ( SpriteRenderer renderer in renderers )
-        //    renderer.enabled = false;
 
         isBlinking = false;
 

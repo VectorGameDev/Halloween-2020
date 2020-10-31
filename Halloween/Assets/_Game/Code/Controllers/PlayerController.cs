@@ -28,6 +28,7 @@ public enum GameControl
 }
 
 
+// delegae to be used when the player changes the control scheme
 public delegate void PlayerControlSchemeUpdate ( GameControl old_scheme, GameControl new_scheme );
 
 
@@ -63,14 +64,16 @@ public class PlayerController : MonoBehaviour
     // the direction in which the character velocity will change
     private Vector2 movementDirection = Vector2.zero;
 
-
     // limit the velocity so character does not move through objects
     public Vector2 maxVelocity = new Vector2 ( 50f, 50f );
 
+    // the minimum velocity for the character - "limit the negative value"
     public Vector2 minVelocity = new Vector2 ( 50f, 50f );
 
+    // the amount of time the player is allowed to jump after leaving the ground
     public float offGroundJumpLimit = 0.2f;
 
+    // how much impact releasing the jump button has on the jump height
     public float jumpPressModifier = 0.85f;
 
 
@@ -116,6 +119,10 @@ public class PlayerController : MonoBehaviour
     // the current moving platform
     private Transform movingPlatform = null;
 
+    // cache the rigidbody2D of the moving platform
+    private Rigidbody2D movingPlatformRigidbody = null;
+
+    // the last checkpoint position
     private Vector3 lastCheckpointPosition = Vector3.zero;
 
 
@@ -137,25 +144,33 @@ public class PlayerController : MonoBehaviour
 
     [Header ( "Player Input" )]
 
+    // player input reference
     public PlayerInput playerInput = null;
 
+    // the current game scheme that the player is using
     private GameControl currentGameControl = GameControl.KEYBOARD;
 
-
+    // the renderer of the hat
     private SpriteRenderer hatRenderer = null;
 
 
+    // counter for when the character is off ground
     private float offGroundCounter = 0.0f;
+
+    // check if the player has jumped
     private bool hasJumped = false;
+
+    // check if the player is holding the jump key
     private bool isPressingJump = false;
+
+    // how long ago has the player pressed the jump button
     private float jumpPressCounter = 0.0f;
 
 
-
+    // event to update the player control scheme
     public static PlayerControlSchemeUpdate OnPlayerControlSchemeUpdate = null;
 
 
-    public GameControl GetGameControl() => currentGameControl;
 
 
     private void Awake ( )
@@ -176,18 +191,17 @@ public class PlayerController : MonoBehaviour
     private void Start ( )
     {
         
+        // update the control scheme at the start
         OnPlayerControlSchemeUpdate?.Invoke ( currentGameControl, currentGameControl );
 
+        // reset values
+        jumpPressCounter = 10.0f;
         lastCheckpointPosition = transform.position;
 
     }
 
     private void FixedUpdate ( )
     {
-
-        // attaching the player to the moving platform
-        if ( movingPlatform != null ) transform.SetParent ( movingPlatform );
-        else transform.SetParent ( null );
 
         // check if there are any interactions nearby
         CheckForInteractions ( );
@@ -207,12 +221,26 @@ public class PlayerController : MonoBehaviour
         rigidbody.velocity = new Vector2 (  movementDirection.x * movementSpeed * Time.deltaTime, 
                                             rigidbody.velocity.y );
 
-        // clamping the velocity
+        // grab the rigidbody velocity
         Vector2 velocity = rigidbody.velocity;
+
+        // check if the player is on top of a moving platform
+        if ( movingPlatformRigidbody != null )
+        {
+
+            // apply the platform velocity to the player velocity
+            // I am restricting to only X axis, but feel free to change this to your needs
+            velocity.x += movingPlatformRigidbody.velocity.x;
+
+            //rigidbody.velocity += movingPlatformRigidbody.velocity; 
+
+        }
+
+        // clamping the velocity | max & min values
         velocity.x = Mathf.Clamp ( velocity.x, -minVelocity.x, maxVelocity.x );
         velocity.y = Mathf.Clamp ( velocity.y, -minVelocity.y, maxVelocity.y );
 
-
+        // limit the jump height for how long the player holds the jump button
         if ( hasJumped && velocity.y > 0 )
         {
 
@@ -220,7 +248,9 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        // re-apply the rigidbody velocity
         rigidbody.velocity = velocity;
+
 
         if ( Mathf.Abs ( rigidbody.velocity.x ) > 0.05f )
         {
@@ -236,8 +266,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        // reset the input values
-        //jump = false;
+        // reset some input values
         interact = false;
         
     }
@@ -250,6 +279,7 @@ public class PlayerController : MonoBehaviour
             
             if ( jumpPressCounter < 0.25f )
             {
+                //jumpPressCounter = 10.0f;
                 hasJumped = true;
                 jump = false;
 
@@ -257,35 +287,30 @@ public class PlayerController : MonoBehaviour
                 rigidbody.velocity = new Vector2 ( rigidbody.velocity.x, jumpForce );
             }
 
-            //// check for input
-            //if ( jump )
-            //{
-
-            //    hasJumped = true;
-            //    jump = false;
-
-            //    // apply the jump force to the player
-            //    rigidbody.velocity = new Vector2 ( rigidbody.velocity.x, jumpForce );
-
-            //}
-
         }
 
-
-        jumpPressCounter += Time.deltaTime;
+        if ( jumpPressCounter < 10.0f )
+            jumpPressCounter += Time.deltaTime;
 
 
     }
 
+
+    // get the current game control scheme
+    public GameControl GetGameControl ( ) => currentGameControl;
+
+
     private bool IsGrounded ( )
     {
 
+        // setup the variables for raycasting
         Vector2 center = collider.bounds.center + ( Vector3 ) collider.offset;
         RaycastHit2D hit2D = Physics2D.Raycast ( center, Vector2.down, collider.size.y * 0.5f + raycastOffset, groundLayerMask );
 
         if ( hit2D.transform == null )
         {
 
+            // check ground with multiple raycasts
             int counter = 0;
 
             do
@@ -301,12 +326,23 @@ public class PlayerController : MonoBehaviour
 
         }
 
+
         if ( hit2D.transform != null )
         {
 
-            offGroundCounter = 0.0f;
-            hasJumped = false;
+            // the character has found ground
 
+            // reset off ground counter
+            offGroundCounter = 0.0f;
+
+            // make sure the character is not jumping or moving upwards, otherwise it will create
+            // a weird double jump
+            if ( Mathf.Abs ( rigidbody.velocity.y ) < Mathf.Abs ( rigidbody.velocity.x ) ||
+                 rigidbody.velocity.y < 0.15f )
+                hasJumped = false;
+
+
+            // check and save the player's last grounded position
             if ( Vector2.Distance ( checkGroundPosition, rigidbody.position ) < maxDistanceBetweenPositions )
             {
 
@@ -328,16 +364,24 @@ public class PlayerController : MonoBehaviour
 
             }
 
+            // make sure the player register the moving platform correctly
             if ( hit2D.transform.CompareTag ( "MovingPlatform" ) )
             {
 
                 movingPlatform = hit2D.transform;
 
+                // make sure we dont get the same rigidbody every single frame to improve performance
+                if ( ( movingPlatformRigidbody != null && movingPlatform.gameObject.GetInstanceID ( ) != movingPlatformRigidbody.gameObject.GetInstanceID ( ) ) ||
+                       movingPlatformRigidbody == null )
+                movingPlatformRigidbody = movingPlatform.GetComponent<Rigidbody2D> ( );
+
             }
             else
             {
 
+                // reset the moving platform variables
                 movingPlatform = null;
+                movingPlatformRigidbody = null;
 
             }
 
@@ -346,6 +390,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+
+            // if no ground has been found, reset values:
 
             movingPlatform = null;
             groundPositionCounter = 0f;
@@ -362,10 +408,12 @@ public class PlayerController : MonoBehaviour
     private void CheckForInteractions ( )
     {
 
+        // creates a circle to find all possible interactions
         Collider2D[] colliders = Physics2D.OverlapCircleAll (   rigidbody.position, 
                                                                 interactionSearchRadius, 
                                                                 interacitonLayerMask );
 
+        // loops through all interactions and find the closest object
         float current_distance = float.MaxValue;
         Interaction best_target = null;
         foreach ( Collider2D collider in colliders )
@@ -387,6 +435,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        // set-up the best interaction target based on the distance from the player
         if ( best_target != null )
         {
 
@@ -413,6 +462,7 @@ public class PlayerController : MonoBehaviour
     public void SetNewHat ( Transform new_hat )
     {
 
+        // set the hat on the player
         new_hat.position = hatPlacement.position;
         new_hat.SetParent ( hatPlacement );
 
@@ -438,6 +488,7 @@ public class PlayerController : MonoBehaviour
     public void SetCheckPointPosition ( Vector3 position )
     {
 
+        // set the checkpoint position
         lastCheckpointPosition = position;
 
     }
@@ -445,6 +496,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnMovement ( InputValue value )
     {
+
+        // method called from the PlayerInput component
+        // called via message
+        // set the horizontal movement
 
         horizontal = value.Get<float> ( );
         movementDirection.x = horizontal;
@@ -455,6 +510,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump ( InputValue value )
     {
+
+        // method called from the PlayerInput component
+        // called via message
+        // set the jump action - it is pass through
+        // this means that we will get a float value
 
         jump = value.Get<float> ( ) > 0.05f;
         isPressingJump = value.Get<float> ( ) > 0.05f;
@@ -470,6 +530,10 @@ public class PlayerController : MonoBehaviour
     public void OnInteract ( InputValue value )
     {
 
+        // method called from the PlayerInput component
+        // called via message
+        // set the interact - it is a simple button press
+
         interact = true;
 
         CheckScheme ( );
@@ -479,6 +543,8 @@ public class PlayerController : MonoBehaviour
 
     private void CheckScheme ( )
     {
+
+        // check which control scheme the player is using...
 
         if ( playerInput.currentControlScheme == "Keyboard" )
         {
@@ -498,6 +564,8 @@ public class PlayerController : MonoBehaviour
     private void CheckCurrentGameControlScheme ( GameControl new_scheme )
     {
 
+        // calls the event to switch the player control scheme if it is a different scheme
+
         if ( new_scheme == currentGameControl )
             return;
 
@@ -510,6 +578,8 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos ( )
     {
         
+        // drawing some gizmos
+
         if ( rigidbody == null )
             rigidbody = GetComponent<Rigidbody2D> ( );
 

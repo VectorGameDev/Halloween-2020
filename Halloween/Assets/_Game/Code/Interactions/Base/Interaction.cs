@@ -28,6 +28,7 @@ public class Interaction : MonoBehaviour
     // if this interaction should be used
     public bool isActive = true;
 
+    // the offset from which the UI will be displayed
     public float uiDisplayYOffset = 1.0f;
 
 
@@ -51,17 +52,23 @@ public class Interaction : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Selects an interaction, invoking an event
+    /// </summary>
     public virtual void Select ( )
     {
 
-        InstructionInteract.OnUpdateUIInteract ( true, ( Vector2 ) transform.position + ( Vector2.up * uiDisplayYOffset ) );
+        InstructionInteract.OnUpdateUIInteract?.Invoke ( true, ( Vector2 ) transform.position + ( Vector2.up * uiDisplayYOffset ) );
 
     }
 
+    /// <summary>
+    /// Deselects an interaction, invoking an event
+    /// </summary>
     public virtual void Deselect ( )
     {
         
-        InstructionInteract.OnUpdateUIInteract ( false, ( Vector2 ) transform.position + ( Vector2.up * uiDisplayYOffset ) );
+        InstructionInteract.OnUpdateUIInteract?.Invoke ( false, ( Vector2 ) transform.position + ( Vector2.up * uiDisplayYOffset ) );
 
     }
 
