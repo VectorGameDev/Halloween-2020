@@ -6,5 +6,8 @@ If you want to use the code make sure to open the Unity Scene and check some of 
 
 This project might be updated in the future.
 
+Please check the YouTube video if you are interested: https://youtu.be/8CL9t20Msdk
+You can support me here: https://patreon.com/vectorgamedev
+
 Happy Coding!
 Vector
